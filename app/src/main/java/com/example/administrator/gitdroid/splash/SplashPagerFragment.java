@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 
 import com.example.administrator.gitdroid.R;
 import com.example.administrator.gitdroid.splash.pager.Pager2;
@@ -25,16 +26,21 @@ public class SplashPagerFragment extends Fragment {
 
     //    绑定id
     @Bind(R.id.viewPager)
-    ViewPager viewPager;
+    ViewPager       viewPager;
     @Bind(R.id.indicator)
     CircleIndicator indicator;
     @BindColor(R.color.colorGreen)
-    int colorGreen;
+    int             colorGreen;//VeiwPager页面对应的背景颜色
     @BindColor(R.color.colorRed)
-    int colorRed;
+    int             colorRed;//VeiwPager页面对应的背景颜色
     @BindColor(R.color.colorYellow)
-    int colorYellow;
-    @Bind(R.id.content) FrameLayout framLayout;
+    int             colorYellow;//VeiwPager页面对应的背景颜色
+    @Bind(R.id.content)
+    FrameLayout     framLayout;//手机Layout
+    @Bind(R.id.layoutPhone)
+    FrameLayout     layoutPhone;
+    @Bind(R.id.ivPhoneFont)
+    ImageView       ivPhoneFont;
 
     private SplashPagerAdapter adapter;
 
@@ -53,15 +59,58 @@ public class SplashPagerFragment extends Fragment {
         viewPager.setAdapter(adapter);
 //        给ViewPager设置监听
         viewPager.addOnPageChangeListener(pagerChangeListener);
+        viewPager.addOnPageChangeListener(pageColorChangeListener);
         indicator.setViewPager(viewPager);
 
     }
 
+    //      该监听器主要监听viewPager在Scroll过程中,
+// 当前布局上的LayoutPhone布局的平移,缩放,渐变的处理
+    private final ViewPager.OnPageChangeListener pageColorChangeListener = new ViewPager.OnPageChangeListener() {
+        @Override
+        public void onPageScrolled(int position, float positionOffset,
+                                   int positionOffsetPixels) {
+//            VeiwPager在第一个和第二个页面之间
+            if (position == 0) {
+                float scale = 0.3f + positionOffset * 0.7f;
+                layoutPhone.setScaleX(scale);
+                layoutPhone.setScaleY(scale);
+//                在平移过程中,fone实时的变化
+                ivPhoneFont.setAlpha(positionOffset);
+//                在平移的过程中有一个平移的动画
+                int scroll = (int) (-400 + positionOffset * 400);
+                int scrollY= (int) (-110*positionOffset);
+                layoutPhone.setTranslationX(scroll);
+//                layoutPhone.setTranslationY(scrollY);
+                return;
+            }
+//              当ViewPager在第二个页面和第三个页面之间时,手机要和ViewPager一起移
+            if (position == 1) {
+                layoutPhone.setTranslationX(-positionOffsetPixels);
+                return;
+            }
+        }
+
+        @Override
+        public void onPageSelected(int position) {
+        }
+
+        @Override
+        public void onPageScrollStateChanged(int state) {
+
+        }
+    };
     //      此监听器主要负责监听页面背景颜色的变化,和最后一个页面视图动画的显示
-    private final ViewPager.OnPageChangeListener pagerChangeListener = new ViewPager.OnPageChangeListener() {
+    private final ViewPager.OnPageChangeListener pagerChangeListener     = new ViewPager.OnPageChangeListener() {
         //      ARGB取值器
         final ArgbEvaluator evaluator = new ArgbEvaluator();
 
+        /**
+         *
+         * @param position  当前页面位置
+         * @param positionOffset  位置偏移量
+         * @param positionOffsetPixels  像素偏移量
+         */
         @Override
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 //            第一个页面到第二个页面之间
@@ -82,11 +131,13 @@ public class SplashPagerFragment extends Fragment {
             }
 
         }
-//      当进入第三张页面时,添加动画
+
+        //      当进入第三张页面时,添加动画
         @Override
         public void onPageSelected(int position) {
-            if (position==2){
-                Pager2 pager2= (Pager2) adapter.getView(position);
+//            显示最后一个视图的动画
+            if (position == 2) {
+                Pager2 pager2 = (Pager2) adapter.getView(position);
                 pager2.showAnimation();
             }
         }
@@ -96,4 +147,10 @@ public class SplashPagerFragment extends Fragment {
 
         }
     };
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        ButterKnife.unbind(this);
+    }
 }
