@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
 
-
+        <!--侧滑菜单-->
     <item
         android:title="@string/github">
         <menu>
@@ -11,7 +11,7 @@
                     android:id="@+id/github_hot_repo"
                     android:icon="@drawable/ic_hot_repo"
                     android:title="@string/hot_repo"
-                    android:checked="true"/>
+                    />
                 <item
                     android:id="@+id/github_hot_coder"
                     android:icon="@drawable/ic_hot_coder"

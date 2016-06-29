@@ -149,8 +149,7 @@ public class SplashPagerFragment extends Fragment {
     };
 
     @Override
-    public void onDetach() {
-        super.onDetach();
-        ButterKnife.unbind(this);
+    public void onDestroy() {
+        super.onDestroy();
     }
 }
