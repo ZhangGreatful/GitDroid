@@ -16,6 +16,9 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import in.srain.cube.views.ptr.PtrClassicFrameLayout;
+import in.srain.cube.views.ptr.PtrDefaultHandler;
+import in.srain.cube.views.ptr.PtrFrameLayout;
 
 /**
  * 仓库列表Fragment
@@ -23,8 +26,11 @@ import butterknife.ButterKnife;
  */
 public class RepoListFragment extends Fragment {
     @Bind(R.id.lvRepos)
-    ListView listView;
-    private ArrayAdapter<String> adapter;
+    ListView              listView;
+    @Bind(R.id.ptrClassicFramLayout)
+    PtrClassicFrameLayout ptrClassicFramLayout;
+    private        ArrayAdapter<String> adapter;
+    private static int                  count;
     private List<String> datas = new ArrayList<>();
 
     public static RepoListFragment getInstance(String language) {
@@ -38,9 +44,7 @@ public class RepoListFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        for (int i = 1; i <= 10; i++) {
-            datas.add("我是第" + i + "条数据");
-        }
+
     }
 
     @Nullable
@@ -57,7 +61,50 @@ public class RepoListFragment extends Fragment {
         adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1);
         listView.setAdapter(adapter);
 
-        adapter.addAll(datas);
+        ptrClassicFramLayout.setPtrHandler(new PtrDefaultHandler() {
+            @Override
+            public void onRefreshBegin(PtrFrameLayout frame) {
+                loadData(20);
+            }
+        });
+    }
+
+    private void loadData(final int size) {
+//        停留3秒
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    datas.clear();
+                    for (int i = 1; i <= size; i++) {
+                        count++;
+                        datas.add("我是第" + count + "条数据");
+                    }
+                    Thread.sleep(3000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+
+//                到UI线程中完成视图工作
+                ptrClassicFramLayout.post(new Runnable() {
+                    @Override
+                    public void run() {
+//                        清除数据
+                        adapter.clear();
+//                        添加数据
+                        adapter.addAll(datas);
+//                刷新数据
+                        adapter.notifyDataSetChanged();
+//                下拉刷新完成
+                        ptrClassicFramLayout.refreshComplete();
+                    }
+                });
+
+            }
+
+        }).start();
+
     }
 
     @Override
