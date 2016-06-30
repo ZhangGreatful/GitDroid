@@ -15,6 +15,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
+ * 最热门仓库的Fragment
  * Created by Administrator on 2016/6/30 0030.
  */
 public class HotRepoFragment extends Fragment {
@@ -22,6 +23,7 @@ public class HotRepoFragment extends Fragment {
     @Bind(R.id.viewPager)ViewPager viewPager;
     @Bind(R.id.tabLayout)TabLayout tabLayout;
 
+    private HotRepoPagerAdapter adapter;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -32,5 +34,15 @@ public class HotRepoFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this,view);
+        adapter=new HotRepoPagerAdapter(getChildFragmentManager());
+        viewPager.setAdapter(adapter);
+//        将tablayout和viewPager绑定
+        tabLayout.setupWithViewPager(viewPager);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroy();
+
     }
 }

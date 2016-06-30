@@ -2,9 +2,11 @@ package com.example.administrator.gitdroid.home;
 
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
-import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -25,8 +27,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     DrawerLayout   drawerLayout;//抽屉(包括内容和侧滑菜单)
     @Bind(R.id.toolbar)
     Toolbar        toolBar;
-    private ActivityUtils activityUtils;
-    private MenuItem      menuItem;
+    private ActivityUtils   activityUtils;
+    private MenuItem        menuItem;
+    //    热门仓库页面的Fragment
+    private HotRepoFragment hotRepoFragment;
 
 
     @Override
@@ -53,6 +57,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 drawerLayout, toolBar, R.string.navigation_drawer_open, navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
+//        设置默认显示的是hotRepoFragment热门仓库
+        hotRepoFragment = new HotRepoFragment();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.replace(R.id.container, hotRepoFragment);
+        transaction.commit();
     }
 
     @Override
