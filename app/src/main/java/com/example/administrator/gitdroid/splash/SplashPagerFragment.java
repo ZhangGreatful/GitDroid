@@ -1,9 +1,9 @@
 package com.example.administrator.gitdroid.splash;
 
-import android.support.v4.app.Fragment;
 import android.animation.ArgbEvaluator;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +23,7 @@ import me.relex.circleindicator.CircleIndicator;
  * Created by Administrator on 2016/6/28 0028.
  */
 public class SplashPagerFragment extends Fragment {
+    private static final String TAG = "SplashPagerFragment";
 
     //    绑定id
     @Bind(R.id.viewPager)
@@ -78,7 +79,7 @@ public class SplashPagerFragment extends Fragment {
 //                在平移过程中,fone实时的变化
                 ivPhoneFont.setAlpha(positionOffset);
 //                在平移的过程中有一个平移的动画
-                int scroll = (int) (-400 + positionOffset * 400);
+                int scroll = (int) (-400+400*positionOffset);
                 int scrollY= (int) (-110*positionOffset);
                 layoutPhone.setTranslationX(scroll);
 //                layoutPhone.setTranslationY(scrollY);

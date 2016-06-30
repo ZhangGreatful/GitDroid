@@ -5,9 +5,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.example.administrator.gitdroid.MainActivity;
 import com.example.administrator.gitdroid.R;
 import com.example.administrator.gitdroid.commons.ActivityUtils;
+import com.example.administrator.gitdroid.home.MainActivity;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -28,6 +28,7 @@ public class SplashActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+
 
 
     }
