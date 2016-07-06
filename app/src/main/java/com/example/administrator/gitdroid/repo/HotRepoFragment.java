@@ -1,4 +1,4 @@
-package com.example.administrator.gitdroid.home;
+package com.example.administrator.gitdroid.repo;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -43,6 +43,6 @@ public class HotRepoFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroy();
-
+        ButterKnife.unbind(this);
     }
 }

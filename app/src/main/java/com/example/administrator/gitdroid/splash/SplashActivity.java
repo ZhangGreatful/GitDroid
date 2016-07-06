@@ -7,7 +7,7 @@ import android.widget.Toast;
 
 import com.example.administrator.gitdroid.R;
 import com.example.administrator.gitdroid.commons.ActivityUtils;
-import com.example.administrator.gitdroid.home.MainActivity;
+import com.example.administrator.gitdroid.main.MainActivity;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -30,7 +30,6 @@ public class SplashActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash);
 
 
-
     }
 
     //      当Content变化时,初始化Activity
@@ -44,10 +43,12 @@ public class SplashActivity extends AppCompatActivity {
     @OnClick(R.id.btnEnter)
     public void enter() {
         activityUtils.startActivity(MainActivity.class);
+        finish();
     }
 
     @OnClick(R.id.btnLogin)
     public void login() {
         Toast.makeText(this, "login", Toast.LENGTH_SHORT).show();
+        finish();
     }
 }

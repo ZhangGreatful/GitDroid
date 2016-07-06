@@ -18,7 +18,24 @@
             android:divider="@null"
             android:visibility="visible"/>
     </in.srain.cube.views.ptr.PtrClassicFrameLayout>
-
+    <!--空视图-->
+    <TextView
+        android:id="@+id/emptyView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white"
+        android:gravity="center"
+        android:text="没有内容"
+        android:visibility="gone"/>
+    <!--错误视图-->
+    <TextView
+        android:id="@+id/errorView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white"
+        android:gravity="center"
+        android:text="刷新发生错误: %s"
+        android:visibility="gone"/>
 
 
 </FrameLayout>

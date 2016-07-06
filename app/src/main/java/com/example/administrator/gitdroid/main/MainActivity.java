@@ -1,4 +1,4 @@
-package com.example.administrator.gitdroid.home;
+package com.example.administrator.gitdroid.main;
 
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -13,6 +13,7 @@ import android.view.MenuItem;
 
 import com.example.administrator.gitdroid.R;
 import com.example.administrator.gitdroid.commons.ActivityUtils;
+import com.example.administrator.gitdroid.repo.HotRepoFragment;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
