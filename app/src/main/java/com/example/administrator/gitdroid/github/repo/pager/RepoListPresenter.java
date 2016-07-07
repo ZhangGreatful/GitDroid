@@ -26,21 +26,25 @@ import retrofit2.Response;
 public class RepoListPresenter extends MvpNullObjectBasePresenter<PtrPageView> {
 
     private Call<RepoResult> repoCall;
+    private int nextPage = 0;
 
     //    下拉刷新视图层的业务逻辑-------------------------------------------------
     public void loadData() {
         getView().hideLoadMore();//隐藏加载更多的视图
         getView().showContentView();//显示内容
-        repoCall = GithubClient.getInstance().searchRepo("language:" + "java", 1);
+        nextPage = 1;//刷新永远是第一页
+        repoCall = GithubClient.getInstance().searchRepo("language:" + "java", nextPage);
         repoCall.enqueue(reposCallback);
     }
 
     //    上拉加载更多视图层的业务逻辑---------------------------------------------
     public void loadMore() {
-
+        getView().showLoadMoreLoading();//显示加载更多
+        repoCall = GithubClient.getInstance().searchRepo("language:" + "java", nextPage);
+        repoCall.enqueue(loadMoreCallBack);
     }
 
-    private Callback<RepoResult> reposCallback = new Callback<RepoResult>() {
+    private Callback<RepoResult> reposCallback    = new Callback<RepoResult>() {
         @Override
         public void onResponse(Call<RepoResult> call, Response<RepoResult> response) {
             getView().stopRefresh();//视图停止刷新
@@ -49,9 +53,42 @@ public class RepoListPresenter extends MvpNullObjectBasePresenter<PtrPageView> {
                 getView().showMessage("result is null");
                 return;
             }
-
+//            当前搜索的语言下,没有任何仓库
+            if (repoResult.getTotalCount() <= 0) {
+                getView().refreshData(null);
+                getView().showEmptyView();
+                return;
+            }
+//              取出当前搜索的语言下,所有仓库
             List<Repo> repoList = repoResult.getRepoList();
             getView().refreshData(repoList);//视图刷新数据
+            nextPage = 2;
+
+        }
+
+        @Override
+        public void onFailure(Call<RepoResult> call, Throwable t) {
+            getView().stopRefresh();//视图停止刷新
+            getView().showMessage(t.getMessage());//显示错误信息
+        }
+    };
+    private Callback<RepoResult> loadMoreCallBack = new Callback<RepoResult>() {
+        @Override
+        public void onResponse(Call<RepoResult> call, Response<RepoResult> response) {
+            getView().hideLoadMore();
+            RepoResult result = response.body();
+            if (result == null) {
+                getView().showLoadMoreError("result is null");
+                return;
+            }
+//            没有更多数据了
+            if (result.getTotalCount() <= 0) {
+                getView().showLoadMoreEnd();
+                return;
+            }
+//            取出当前搜索的语言下,所有仓库
+            List<Repo> list = result.getRepoList();
+            getView().addMoreData(list);
         }
 
         @Override
