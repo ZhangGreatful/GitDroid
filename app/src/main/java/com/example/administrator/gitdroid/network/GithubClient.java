@@ -1,6 +1,7 @@
 package com.example.administrator.gitdroid.network;
 
 import com.example.administrator.gitdroid.login.model.AccessTokenResult;
+import com.example.administrator.gitdroid.login.model.User;
 
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
@@ -11,7 +12,7 @@ import retrofit2.http.Field;
 /**
  * Created by Administrator on 2016/7/6 0006.
  */
-public class GithubClient {
+public class GithubClient implements GithubApi{
     private static GithubClient sClient;
 
     public static GithubClient getInstance() {
@@ -25,6 +26,7 @@ public class GithubClient {
 
     private GithubClient() {
         OkHttpClient client = new OkHttpClient.Builder()
+                .addInterceptor(new TokenIntercepter())//添加拦截器,处理AccessToken
                 .build();
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://api.github.com")
@@ -36,5 +38,10 @@ public class GithubClient {
 
     public Call<AccessTokenResult> getOAuthToken(@Field("client_id") String client, @Field("client_secret") String clientSecret, @Field("code") String code) {
         return gitHubApi.getOAuthToken(client, clientSecret, code);
+    }
+
+    @Override
+    public Call<User> getUserInfo() {
+        return gitHubApi.getUserInfo();
     }
 }

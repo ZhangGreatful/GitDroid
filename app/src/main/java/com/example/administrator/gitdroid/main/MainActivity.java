@@ -9,14 +9,18 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import com.example.administrator.gitdroid.R;
 import com.example.administrator.gitdroid.commons.ActivityUtils;
 import com.example.administrator.gitdroid.login.LoginActivity;
+import com.example.administrator.gitdroid.login.model.CurrentUser;
 import com.example.administrator.gitdroid.repo.HotRepoFragment;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -24,7 +28,7 @@ import butterknife.ButterKnife;
 import static com.example.administrator.gitdroid.R.string.navigation_drawer_close;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-
+    private static final String TAG = "MainActivity";
     @Bind(R.id.navigationView)
     NavigationView navigationView;
     @Bind(R.id.drawerLayout)
@@ -35,7 +39,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private MenuItem        menuItem;
     //    热门仓库页面的Fragment
     private HotRepoFragment hotRepoFragment;
-    private Button btnLogin;
+    private Button          btnLogin;
+    private ImageView       ivIcon;
 
 
     @Override
@@ -43,6 +48,29 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+//        还没有授权登录
+        if (CurrentUser.isEmpty()) {
+            btnLogin.setText(R.string.login_github);
+            return;
+        }
+//        已经授权登录
+        btnLogin.setText(R.string.switch_account);
+        getSupportActionBar().setTitle(CurrentUser.getUser().getName());
+        Log.d(TAG, "onStart: **********" + CurrentUser.getUser().getName());
+//        设置用户头像
+//        使用其他第三方图像缓存加载图片
+        String photoUrl = CurrentUser.getUser().getAvatar();
+//        1.看内存里有没有图片
+//        2.看硬盘里有没有图片
+//        3.根据Url下载图片
+//                1.下载后,存到硬盘
+//                  2.下载后,存到内存
+        ImageLoader.getInstance().displayImage(photoUrl, ivIcon);
     }
 
     @Override
@@ -62,8 +90,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 drawerLayout, toolBar, R.string.navigation_drawer_open, navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
+        ivIcon = ButterKnife.findById(navigationView.getHeaderView(0), R.id.ivIcon);
 //          登录
-        btnLogin=ButterKnife.findById(navigationView.getHeaderView(0),R.id.btnLogin);
+        btnLogin = ButterKnife.findById(navigationView.getHeaderView(0), R.id.btnLogin);
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

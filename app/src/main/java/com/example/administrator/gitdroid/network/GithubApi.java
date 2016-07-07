@@ -1,10 +1,12 @@
 package com.example.administrator.gitdroid.network;
 
 import com.example.administrator.gitdroid.login.model.AccessTokenResult;
+import com.example.administrator.gitdroid.login.model.User;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 
@@ -33,4 +35,7 @@ public interface GithubApi {
             @Field("client_id") String client,
             @Field("client_secret") String clientSecret,
             @Field("code") String code);
+
+    @GET("user")
+    Call<User> getUserInfo();
 }
