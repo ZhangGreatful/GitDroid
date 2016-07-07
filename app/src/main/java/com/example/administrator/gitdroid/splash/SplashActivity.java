@@ -3,10 +3,10 @@ package com.example.administrator.gitdroid.splash;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.example.administrator.gitdroid.R;
 import com.example.administrator.gitdroid.commons.ActivityUtils;
+import com.example.administrator.gitdroid.login.LoginActivity;
 import com.example.administrator.gitdroid.main.MainActivity;
 
 import butterknife.Bind;
@@ -48,7 +48,7 @@ public class SplashActivity extends AppCompatActivity {
 
     @OnClick(R.id.btnLogin)
     public void login() {
-        Toast.makeText(this, "login", Toast.LENGTH_SHORT).show();
+        activityUtils.startActivity(LoginActivity.class);
         finish();
     }
 }

@@ -10,9 +10,12 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 import com.example.administrator.gitdroid.R;
 import com.example.administrator.gitdroid.commons.ActivityUtils;
+import com.example.administrator.gitdroid.login.LoginActivity;
 import com.example.administrator.gitdroid.repo.HotRepoFragment;
 
 import butterknife.Bind;
@@ -32,6 +35,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private MenuItem        menuItem;
     //    热门仓库页面的Fragment
     private HotRepoFragment hotRepoFragment;
+    private Button btnLogin;
 
 
     @Override
@@ -58,6 +62,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 drawerLayout, toolBar, R.string.navigation_drawer_open, navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
+//          登录
+        btnLogin=ButterKnife.findById(navigationView.getHeaderView(0),R.id.btnLogin);
+        btnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                activityUtils.startActivity(LoginActivity.class);
+            }
+        });
 //        设置默认显示的是hotRepoFragment热门仓库
         hotRepoFragment = new HotRepoFragment();
         FragmentManager fragmentManager = getSupportFragmentManager();
