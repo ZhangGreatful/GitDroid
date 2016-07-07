@@ -1,4 +1,4 @@
-package com.example.administrator.gitdroid.repo;
+package com.example.administrator.gitdroid.github.repo;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

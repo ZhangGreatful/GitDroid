@@ -1,4 +1,4 @@
-package com.example.administrator.gitdroid.login;
+package com.example.administrator.gitdroid.github.login;
 
 import android.net.Uri;
 import android.os.Bundle;
@@ -13,7 +13,7 @@ import android.webkit.WebViewClient;
 import com.example.administrator.gitdroid.R;
 import com.example.administrator.gitdroid.commons.ActivityUtils;
 import com.example.administrator.gitdroid.commons.LogUtils;
-import com.example.administrator.gitdroid.main.MainActivity;
+import com.example.administrator.gitdroid.github.main.MainActivity;
 import com.example.administrator.gitdroid.network.GithubApi;
 import com.hannesdorfmann.mosby.mvp.MvpActivity;
 

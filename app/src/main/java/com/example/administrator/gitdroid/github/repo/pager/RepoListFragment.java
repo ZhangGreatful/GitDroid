@@ -1,4 +1,4 @@
-package com.example.administrator.gitdroid.repo.pager;
+package com.example.administrator.gitdroid.github.repo.pager;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,7 +12,8 @@ import android.widget.Toast;
 
 import com.example.administrator.gitdroid.R;
 import com.example.administrator.gitdroid.components.FooterView;
-import com.example.administrator.gitdroid.repo.pager.view.PtrPageView;
+import com.example.administrator.gitdroid.github.repo.pager.model.Repo;
+import com.example.administrator.gitdroid.github.repo.pager.view.PtrPageView;
 import com.hannesdorfmann.mosby.mvp.MvpFragment;
 import com.mugen.Mugen;
 import com.mugen.MugenCallbacks;
@@ -175,7 +176,7 @@ public class RepoListFragment extends MvpFragment<PtrPageView, RepoListPresenter
         ButterKnife.unbind(this);
     }
 
-    private void asyncLoadData(final int size, final ArrayList<String> datas) {
+    private void asyncLoadData(final int size, final ArrayList<Repo> datas) {
 
 //        视图要到UI线程里加载
         ptrClassicFrameLayout.post(new Runnable() {
@@ -229,10 +230,15 @@ public class RepoListFragment extends MvpFragment<PtrPageView, RepoListPresenter
         errorView.setVisibility(View.GONE);
     }
 
+
     @Override
-    public void refreshData(List<String> datas) {
+    public void refreshData(List<Repo> datas) {
         adpter.clear();
-        adpter.addAll(datas);
+        for (int i = 0; i < datas.size(); i++) {
+            String fullName = datas.get(i).getName();
+            adpter.addAll(fullName);
+        }
+//        adpter.addAll(datas);
         adpter.notifyDataSetChanged();
     }
 
@@ -277,8 +283,13 @@ public class RepoListFragment extends MvpFragment<PtrPageView, RepoListPresenter
 //    }
 
     //    这是上拉加载更多视图层实现-----------------------------------------
-    public void addMoreData(List<String> datas) {
-        adpter.addAll(datas);
+
+    @Override
+    public void addMoreData(List<Repo> datas) {
+        for (int i = 0; i < datas.size(); i++) {
+            String fullName = datas.get(i).getFullName();
+            adpter.addAll(fullName);
+        }
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.example.administrator.gitdroid.login;
+package com.example.administrator.gitdroid.github.login;
 
 import com.hannesdorfmann.mosby.mvp.MvpView;
 

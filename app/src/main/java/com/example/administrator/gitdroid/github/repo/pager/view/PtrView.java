@@ -1,4 +1,4 @@
-package com.example.administrator.gitdroid.repo.pager.view;
+package com.example.administrator.gitdroid.github.repo.pager.view;
 
 /**
  * 下拉刷新视图抽象接口

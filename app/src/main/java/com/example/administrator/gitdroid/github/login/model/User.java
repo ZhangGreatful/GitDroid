@@ -1,4 +1,4 @@
-package com.example.administrator.gitdroid.login.model;
+package com.example.administrator.gitdroid.github.login.model;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -12,10 +12,12 @@ public class User {
 //    "name": "monalisa octocat",
 
 //    登录所用的账号
+    @SerializedName("login")
     private String login;
 //    id
     private int id;
 //    用户名
+    @SerializedName("name")
     private String name;
 //    用户头像路径
     @SerializedName("avatar_url")

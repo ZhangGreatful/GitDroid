@@ -6,8 +6,8 @@ import android.widget.Button;
 
 import com.example.administrator.gitdroid.R;
 import com.example.administrator.gitdroid.commons.ActivityUtils;
-import com.example.administrator.gitdroid.login.LoginActivity;
-import com.example.administrator.gitdroid.main.MainActivity;
+import com.example.administrator.gitdroid.github.login.LoginActivity;
+import com.example.administrator.gitdroid.github.main.MainActivity;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;

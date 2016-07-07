@@ -1,10 +1,10 @@
-package com.example.administrator.gitdroid.login;
+package com.example.administrator.gitdroid.github.login;
 
 import android.util.Log;
 
-import com.example.administrator.gitdroid.login.model.AccessTokenResult;
-import com.example.administrator.gitdroid.login.model.CurrentUser;
-import com.example.administrator.gitdroid.login.model.User;
+import com.example.administrator.gitdroid.github.login.model.AccessTokenResult;
+import com.example.administrator.gitdroid.github.login.model.CurrentUser;
+import com.example.administrator.gitdroid.github.login.model.User;
 import com.example.administrator.gitdroid.network.GithubApi;
 import com.example.administrator.gitdroid.network.GithubClient;
 import com.hannesdorfmann.mosby.mvp.MvpNullObjectBasePresenter;

@@ -1,13 +1,15 @@
 package com.example.administrator.gitdroid.network;
 
-import com.example.administrator.gitdroid.login.model.AccessTokenResult;
-import com.example.administrator.gitdroid.login.model.User;
+import com.example.administrator.gitdroid.github.login.model.AccessTokenResult;
+import com.example.administrator.gitdroid.github.login.model.User;
+import com.example.administrator.gitdroid.github.repo.pager.model.RepoResult;
 
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Field;
+import retrofit2.http.Query;
 
 /**
  * Created by Administrator on 2016/7/6 0006.
@@ -43,5 +45,10 @@ public class GithubClient implements GithubApi{
     @Override
     public Call<User> getUserInfo() {
         return gitHubApi.getUserInfo();
+    }
+
+    @Override
+    public Call<RepoResult> searchRepo(@Query("q") String query, @Query("page") int pageId) {
+        return gitHubApi.searchRepo(query,pageId);
     }
 }

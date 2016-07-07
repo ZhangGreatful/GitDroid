@@ -1,4 +1,4 @@
-package com.example.administrator.gitdroid.login.model;
+package com.example.administrator.gitdroid.github.login.model;
 
 import com.google.gson.annotations.SerializedName;
 

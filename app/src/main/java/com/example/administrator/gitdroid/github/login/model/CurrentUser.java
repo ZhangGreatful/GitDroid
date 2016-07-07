@@ -1,4 +1,4 @@
-package com.example.administrator.gitdroid.login.model;
+package com.example.administrator.gitdroid.github.login.model;
 
 /**
  * Created by Administrator on 2016/7/6 0006.

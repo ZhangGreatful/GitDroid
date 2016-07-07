@@ -19,9 +19,9 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".main.MainActivity">
+        <activity android:name=".github.main.MainActivity">
         </activity>
-        <activity android:name=".login.LoginActivity">
+        <activity android:name=".github.login.LoginActivity">
         </activity>
     </application>
 

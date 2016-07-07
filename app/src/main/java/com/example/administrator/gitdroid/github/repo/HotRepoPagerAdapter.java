@@ -1,10 +1,10 @@
-package com.example.administrator.gitdroid.repo;
+package com.example.administrator.gitdroid.github.repo;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.example.administrator.gitdroid.repo.pager.RepoListFragment;
+import com.example.administrator.gitdroid.github.repo.pager.RepoListFragment;
 
 import java.util.ArrayList;
 import java.util.List;

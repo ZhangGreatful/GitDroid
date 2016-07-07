@@ -1,4 +1,4 @@
-package com.example.administrator.gitdroid.main;
+package com.example.administrator.gitdroid.github.main;
 
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -17,9 +17,9 @@ import android.widget.ImageView;
 
 import com.example.administrator.gitdroid.R;
 import com.example.administrator.gitdroid.commons.ActivityUtils;
-import com.example.administrator.gitdroid.login.LoginActivity;
-import com.example.administrator.gitdroid.login.model.CurrentUser;
-import com.example.administrator.gitdroid.repo.HotRepoFragment;
+import com.example.administrator.gitdroid.github.login.LoginActivity;
+import com.example.administrator.gitdroid.github.login.model.CurrentUser;
+import com.example.administrator.gitdroid.github.repo.HotRepoFragment;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import butterknife.Bind;

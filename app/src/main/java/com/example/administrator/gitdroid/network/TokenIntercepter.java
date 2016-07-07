@@ -1,6 +1,6 @@
 package com.example.administrator.gitdroid.network;
 
-import com.example.administrator.gitdroid.login.model.CurrentUser;
+import com.example.administrator.gitdroid.github.login.model.CurrentUser;
 
 import java.io.IOException;
 
