@@ -1,6 +1,6 @@
-package com.example.administrator.gitdroid.github.repo.pager.view;
+package com.example.administrator.gitdroid.github.hotrepo.pager.view;
 
-import com.example.administrator.gitdroid.github.repo.pager.model.Repo;
+import com.example.administrator.gitdroid.github.hotrepo.pager.model.Repo;
 import com.hannesdorfmann.mosby.mvp.MvpView;
 
 import java.util.List;

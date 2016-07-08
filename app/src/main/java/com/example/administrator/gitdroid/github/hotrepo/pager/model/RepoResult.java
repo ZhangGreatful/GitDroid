@@ -1,4 +1,4 @@
-package com.example.administrator.gitdroid.github.repo.pager.model;
+package com.example.administrator.gitdroid.github.hotrepo.pager.model;
 
 import com.google.gson.annotations.SerializedName;
 

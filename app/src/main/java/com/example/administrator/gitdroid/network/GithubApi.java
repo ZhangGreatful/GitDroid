@@ -2,14 +2,19 @@ package com.example.administrator.gitdroid.network;
 
 import com.example.administrator.gitdroid.github.login.model.AccessTokenResult;
 import com.example.administrator.gitdroid.github.login.model.User;
-import com.example.administrator.gitdroid.github.repo.pager.model.RepoResult;
+import com.example.administrator.gitdroid.github.hotrepo.pager.model.RepoResult;
+import com.example.administrator.gitdroid.github.repo.RepoContentResult;
 
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 /**
@@ -61,4 +66,26 @@ public interface GithubApi {
     Call<RepoResult> searchRepo(
             @Query("q") String query,
             @Query("page") int pageId);
+
+//    GET /repos/:owner/:repo/readme
+
+    /**
+     * @param owner 仓库拥有者
+     * @param repo  仓库名称
+     * @return 仓库的Readme页面的内容, 将是Markdown格式
+     */
+    @GET("/repos/{owner}/{repo}/readme")
+    Call<RepoContentResult> getReadme(@Path("owner") String owner, @Path("repo") String repo);
+
+    /**
+     * https://api.github.com//repos/square/okhttp/readme
+     * 获取一个Markdown内容对应的HTML页面
+     *
+     * @param body 请求体,内容来自{@Lintk RepoContentResult#Content}
+     * @return Call对象
+     */
+    //    POST /markdown/raw
+    @Headers({"Content-Type: text/plain"})
+    @POST("/markdown/raw")
+    Call<ResponseBody> markdown(@Body RequestBody body);
 }

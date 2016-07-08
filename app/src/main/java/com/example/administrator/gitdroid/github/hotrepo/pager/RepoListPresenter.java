@@ -1,8 +1,9 @@
-package com.example.administrator.gitdroid.github.repo.pager;
+package com.example.administrator.gitdroid.github.hotrepo.pager;
 
-import com.example.administrator.gitdroid.github.repo.pager.model.Repo;
-import com.example.administrator.gitdroid.github.repo.pager.model.RepoResult;
-import com.example.administrator.gitdroid.github.repo.pager.view.PtrPageView;
+import com.example.administrator.gitdroid.github.hotrepo.Language;
+import com.example.administrator.gitdroid.github.hotrepo.pager.model.Repo;
+import com.example.administrator.gitdroid.github.hotrepo.pager.model.RepoResult;
+import com.example.administrator.gitdroid.github.hotrepo.pager.view.PtrPageView;
 import com.example.administrator.gitdroid.network.GithubClient;
 import com.hannesdorfmann.mosby.mvp.MvpNullObjectBasePresenter;
 
@@ -27,20 +28,25 @@ public class RepoListPresenter extends MvpNullObjectBasePresenter<PtrPageView> {
 
     private Call<RepoResult> repoCall;
     private int nextPage = 0;
+    private Language language;
+
+    public RepoListPresenter(Language language) {
+        this.language = language;
+    }
 
     //    下拉刷新视图层的业务逻辑-------------------------------------------------
     public void loadData() {
         getView().hideLoadMore();//隐藏加载更多的视图
         getView().showContentView();//显示内容
         nextPage = 1;//刷新永远是第一页
-        repoCall = GithubClient.getInstance().searchRepo("language:" + "java", nextPage);
+        repoCall = GithubClient.getInstance().searchRepo("language:" + language.getPath(), nextPage);
         repoCall.enqueue(reposCallback);
     }
 
     //    上拉加载更多视图层的业务逻辑---------------------------------------------
     public void loadMore() {
         getView().showLoadMoreLoading();//显示加载更多
-        repoCall = GithubClient.getInstance().searchRepo("language:" + "java", nextPage);
+        repoCall = GithubClient.getInstance().searchRepo("language:" + language.getPath(), nextPage);
         repoCall.enqueue(loadMoreCallBack);
     }
 
@@ -89,6 +95,7 @@ public class RepoListPresenter extends MvpNullObjectBasePresenter<PtrPageView> {
 //            取出当前搜索的语言下,所有仓库
             List<Repo> list = result.getRepoList();
             getView().addMoreData(list);
+            nextPage++;
         }
 
         @Override

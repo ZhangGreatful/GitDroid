@@ -1,14 +1,17 @@
-package com.example.administrator.gitdroid.github.repo.pager.model;
+package com.example.administrator.gitdroid.github.hotrepo.pager.model;
 
 import com.example.administrator.gitdroid.github.login.model.User;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 /**
  * Created by Administrator on 2016/7/7 0007.
  */
-public class Repo {
+public class Repo implements Serializable {
 
     //    仓库id
+    @SerializedName("id")
     private int    id;
     //    仓库描述
     @SerializedName("name")

@@ -2,19 +2,24 @@ package com.example.administrator.gitdroid.network;
 
 import com.example.administrator.gitdroid.github.login.model.AccessTokenResult;
 import com.example.administrator.gitdroid.github.login.model.User;
-import com.example.administrator.gitdroid.github.repo.pager.model.RepoResult;
+import com.example.administrator.gitdroid.github.hotrepo.pager.model.RepoResult;
+import com.example.administrator.gitdroid.github.repo.RepoContentResult;
 
 import okhttp3.OkHttpClient;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.Body;
 import retrofit2.http.Field;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 /**
  * Created by Administrator on 2016/7/6 0006.
  */
-public class GithubClient implements GithubApi{
+public class GithubClient implements GithubApi {
     private static GithubClient sClient;
 
     public static GithubClient getInstance() {
@@ -49,6 +54,17 @@ public class GithubClient implements GithubApi{
 
     @Override
     public Call<RepoResult> searchRepo(@Query("q") String query, @Query("page") int pageId) {
-        return gitHubApi.searchRepo(query,pageId);
+        return gitHubApi.searchRepo(query, pageId);
+    }
+
+    @Override
+    public Call<RepoContentResult> getReadme(@Path("owner") String owner, @Path("repo") String repo) {
+        return gitHubApi.getReadme(owner, repo);
+    }
+
+    @Override
+    public Call<ResponseBody> markdown(@Body RequestBody body) {
+        return gitHubApi.markdown(body);
     }
 }
+

@@ -1,4 +1,4 @@
-package com.example.administrator.gitdroid.github.repo;
+package com.example.administrator.gitdroid.github.hotrepo;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -20,22 +20,24 @@ import butterknife.ButterKnife;
  */
 public class HotRepoFragment extends Fragment {
 
-    @Bind(R.id.viewPager)ViewPager viewPager;
-    @Bind(R.id.tabLayout)TabLayout tabLayout;
+    @Bind(R.id.viewPager)
+    ViewPager viewPager;
+    @Bind(R.id.tabLayout)
+    TabLayout tabLayout;
 
     private HotRepoPagerAdapter adapter;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_hot_repo,container,false);
+        return inflater.inflate(R.layout.fragment_hot_repo, container, false);
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ButterKnife.bind(this,view);
-        adapter=new HotRepoPagerAdapter(getChildFragmentManager());
-        viewPager.setAdapter(adapter);
+        ButterKnife.bind(this, view);
+        viewPager.setAdapter(new HotRepoPagerAdapter(getChildFragmentManager(),getContext()));
 //        将tablayout和viewPager绑定
         tabLayout.setupWithViewPager(viewPager);
     }

@@ -19,7 +19,7 @@ import com.example.administrator.gitdroid.R;
 import com.example.administrator.gitdroid.commons.ActivityUtils;
 import com.example.administrator.gitdroid.github.login.LoginActivity;
 import com.example.administrator.gitdroid.github.login.model.CurrentUser;
-import com.example.administrator.gitdroid.github.repo.HotRepoFragment;
+import com.example.administrator.gitdroid.github.hotrepo.HotRepoFragment;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import butterknife.Bind;

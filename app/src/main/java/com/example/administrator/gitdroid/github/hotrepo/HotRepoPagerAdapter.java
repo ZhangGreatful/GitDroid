@@ -1,12 +1,12 @@
-package com.example.administrator.gitdroid.github.repo;
+package com.example.administrator.gitdroid.github.hotrepo;
 
+import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.example.administrator.gitdroid.github.repo.pager.RepoListFragment;
+import com.example.administrator.gitdroid.github.hotrepo.pager.RepoListFragment;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,17 +15,12 @@ import java.util.List;
  */
 public class HotRepoPagerAdapter extends FragmentPagerAdapter {
 
-    private final List<String> languages;
-    public HotRepoPagerAdapter(FragmentManager fm) {
+    private final List<Language> languages;
+
+    public HotRepoPagerAdapter(FragmentManager fm, Context context) {
         super(fm);
-        languages=new ArrayList<>();
-        languages.add("java1");
-        languages.add("java2");
-        languages.add("java3");
-        languages.add("java4");
-        languages.add("java5");
-        languages.add("java6");
-        languages.add("java7");
+//        从本地read出来
+        languages = Language.getDefaultLanguage(context);
     }
 
     @Override
@@ -40,6 +35,6 @@ public class HotRepoPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return languages.get(position);
+        return languages.get(position).getName();
     }
 }

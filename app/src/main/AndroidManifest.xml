@@ -19,10 +19,17 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".github.main.MainActivity">
+        <activity
+            android:name=".github.main.MainActivity"
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".github.login.LoginActivity">
+        <activity
+            android:name=".github.login.LoginActivity"
+            android:screenOrientation="portrait">
         </activity>
+        <activity
+            android:name=".github.repo.RepoInfoActivity"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

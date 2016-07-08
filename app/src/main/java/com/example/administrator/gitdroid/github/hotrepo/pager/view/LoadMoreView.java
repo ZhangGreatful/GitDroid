@@ -1,4 +1,4 @@
-package com.example.administrator.gitdroid.github.repo.pager.view;
+package com.example.administrator.gitdroid.github.hotrepo.pager.view;
 
 /**
  * Created by Administrator on 2016/7/1 0001.
