@@ -16,7 +16,7 @@ public class RepoGroupDao {
 
     public RepoGroupDao(DbHelper dbHelper) {
         try {
-            dbHelper.getDao(RepoGroup.class);
+            dao = dbHelper.getDao(RepoGroup.class);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

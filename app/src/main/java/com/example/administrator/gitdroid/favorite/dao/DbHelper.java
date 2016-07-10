@@ -20,6 +20,7 @@ public class DbHelper extends OrmLiteSqliteOpenHelper {
     private static final int VERSION = 1;
     private static DbHelper sInstance;
 
+    //    采用单例模式
     public static synchronized DbHelper getInstance(Context context) {
         if (sInstance == null) {
             sInstance = new DbHelper(context.getApplicationContext());
