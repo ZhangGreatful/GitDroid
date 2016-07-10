@@ -16,7 +16,9 @@ import android.widget.TextView;
 import com.example.administrator.gitdroid.R;
 import com.example.administrator.gitdroid.commons.ActivityUtils;
 import com.example.administrator.gitdroid.favorite.dao.DbHelper;
+import com.example.administrator.gitdroid.favorite.dao.LocalRepoDao;
 import com.example.administrator.gitdroid.favorite.dao.RepoGroupDao;
+import com.example.administrator.gitdroid.favorite.model.LocalRepoAdapter;
 import com.example.administrator.gitdroid.favorite.model.RepoGroup;
 
 import java.util.List;
@@ -34,13 +36,16 @@ public class FavoriteFragment extends Fragment implements PopupMenu.OnMenuItemCl
     TextView tvGroupType;
     @Bind(R.id.listView)
     ListView listView;
-    private RepoGroupDao  repoGroupDao;
-    private ActivityUtils activityUtils;
+    private RepoGroupDao     repoGroupDao;//仓库类别Dao
+    private ActivityUtils    activityUtils;
+    private LocalRepoAdapter adapter;
+    private LocalRepoDao     localRepoDao;//本地仓库Dao
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         repoGroupDao = new RepoGroupDao(DbHelper.getInstance(getContext()));
+        localRepoDao = new LocalRepoDao(DbHelper.getInstance(getContext()));
         activityUtils = new ActivityUtils(this);
     }
 
@@ -54,6 +59,11 @@ public class FavoriteFragment extends Fragment implements PopupMenu.OnMenuItemCl
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
+        adapter = new LocalRepoAdapter();
+        listView.setAdapter(adapter);
+//        首先,进入时默认显示全部本地仓库
+        adapter.setData(localRepoDao.queryForAll());
+
     }
 
     //    点击ImageButton弹出PopupMenu
@@ -91,13 +101,13 @@ public class FavoriteFragment extends Fragment implements PopupMenu.OnMenuItemCl
 //        ListView控件,上面的数据要重置更新数据
         switch (repoGroupID) {
             case R.id.repo_group_all:
-                activityUtils.showToast("全部");
+                adapter.setData(localRepoDao.queryForAll());
                 break;
             case R.id.repo_group_no:
-                activityUtils.showToast("未分类");
+                adapter.setData(localRepoDao.queryForNoGroup());
                 break;
             default:
-                activityUtils.showToast("id:" + repoGroupID);
+                adapter.setData(localRepoDao.queryForGroupId(repoGroupID));
                 break;
         }
     }
