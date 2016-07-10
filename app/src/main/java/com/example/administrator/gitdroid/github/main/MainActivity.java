@@ -2,6 +2,7 @@ package com.example.administrator.gitdroid.github.main;
 
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
@@ -17,6 +18,7 @@ import android.widget.ImageView;
 
 import com.example.administrator.gitdroid.R;
 import com.example.administrator.gitdroid.commons.ActivityUtils;
+import com.example.administrator.gitdroid.favorite.FavoriteFragment;
 import com.example.administrator.gitdroid.github.login.LoginActivity;
 import com.example.administrator.gitdroid.github.login.model.CurrentUser;
 import com.example.administrator.gitdroid.github.hotrepo.HotRepoFragment;
@@ -35,12 +37,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     DrawerLayout   drawerLayout;//抽屉(包括内容和侧滑菜单)
     @Bind(R.id.toolbar)
     Toolbar        toolBar;
-    private ActivityUtils   activityUtils;
-    private MenuItem        menuItem;
+    private ActivityUtils    activityUtils;
+    private MenuItem         menuItem;
     //    热门仓库页面的Fragment
-    private HotRepoFragment hotRepoFragment;
-    private Button          btnLogin;
-    private ImageView       ivIcon;
+    private HotRepoFragment  hotRepoFragment;
+    //          我的收藏页面的Fragment
+    private FavoriteFragment favoriteFragment;
+    private Button           btnLogin;
+    private ImageView        ivIcon;
 
 
     @Override
@@ -60,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
 //        已经授权登录
         btnLogin.setText(R.string.switch_account);
-        getSupportActionBar().setTitle(CurrentUser.getUser().getName());
+        getSupportActionBar().setTitle(CurrentUser.getUser().getLogin());
         Log.d(TAG, "onStart: **********" + CurrentUser.getUser().getName());
 //        设置用户头像
 //        使用其他第三方图像缓存加载图片
@@ -115,29 +119,49 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         switch (item.getItemId()) {
             case R.id.github_hot_repo:
-                activityUtils.showToast(R.string.hot_repo);
+                if (!hotRepoFragment.isAdded()) {
+                    replaceFragment(hotRepoFragment);
+                }
                 break;
-            case R.id.github_hot_coder:
-                activityUtils.showToast(R.string.hot_coder);
-                break;
-            case R.id.github_trend:
-                activityUtils.showToast(R.string.trend);
-                break;
+//            case R.id.github_hot_coder:
+//                activityUtils.showToast(R.string.hot_coder);
+//                break;
+//            case R.id.github_trend:
+//                activityUtils.showToast(R.string.trend);
+//                break;
             case R.id.arsenal_my_repo:
-                activityUtils.showToast(R.string.my_repo);
+                if (favoriteFragment == null) favoriteFragment = new FavoriteFragment();
+                if (!favoriteFragment.isAdded()) {
+                    replaceFragment(favoriteFragment);
+                }
                 break;
-            case R.id.arsenal_recommend:
-                activityUtils.showToast(R.string.recommend);
-                break;
+//            case R.id.arsenal_recommend:
+//                activityUtils.showToast(R.string.recommend);
+//                break;
             case R.id.tips_daily:
-                activityUtils.showToast(R.string.tips_daily);
+//                activityUtils.showToast(R.string.tips_daily);
                 break;
-            case R.id.tips_share:
-                break;
+//            case R.id.tips_share:
+//                break;
 
         }
+//        关闭侧拉菜单,为了让关闭更加流畅,放在线程中执行
+        drawerLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                drawerLayout.closeDrawer(GravityCompat.START);
+            }
+        });
 //        返回true,代表将该菜单项变为checked状态
         return true;
+    }
+
+    //      替换不同的Fragment
+    private void replaceFragment(Fragment fragment) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.replace(R.id.container, fragment);
+        transaction.commit();
     }
 
     @Override

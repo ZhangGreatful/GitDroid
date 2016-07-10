@@ -42,10 +42,11 @@ dependencies {
     compile 'com.hannesdorfmann.mosby:mvp:2.0.1'
     compile 'com.squareup.retrofit2:retrofit:2.0.2'
     compile 'com.squareup.retrofit2:converter-gson:2.0.2'
-//    下载图片Image-loader
+    //    下载图片Image-loader
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
-
     compile 'commons-io:commons-io:2.4'
+    compile 'com.j256.ormlite:ormlite-android:4.48'
+    compile 'com.j256.ormlite:ormlite-core:4.48'
 }
 
 
